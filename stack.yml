@@ -1,0 +1,44 @@
+version: '3.1'
+
+services:
+
+  mongo:
+    image: mongo
+    restart: always
+    container_name: mongo-server
+    ports: 
+     - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: abc123
+    networks:
+      - mongo-network
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: abc123
+      ME_CONFIG_MONGODB_SERVER: mongo-server
+    networks:
+      - mongo-network
+
+  nifi:
+    container_name: nifi
+    image: apache/nifi:latest
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - NIFI_WEB_HTTP_PORT=8080
+    volumes:
+      - ./nifi-storage:/storage
+    networks:
+      - mongo-network
+
+networks: 
+    mongo-network:
+      driver: bridge
