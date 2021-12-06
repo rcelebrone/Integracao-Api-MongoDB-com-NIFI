@@ -1,5 +1,7 @@
 # Integrar dados de uma API para um Banco MongoDB com NiFi
 
+![Screenshot from 2021-12-03 22-16-03](https://user-images.githubusercontent.com/7469400/144918707-dfe1f06d-583a-4134-847e-a1cc3781e623.png)
+
 ## Compilar e rodar Nifi + MongoDB 
 `docker-compose -f stack.yml up`
 
